@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results - Skill Gap Analyzer</title>
+    <meta name="description" content="Your personalized skill gap analysis and career transition roadmap.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🎯</span>
+                    <span class="logo-text">Skill Gap Analyzer</span>
+                </a>
+                <div class="nav-links">
+                    <a href="dashboard.html" class="btn-secondary">New Analysis</a>
+                    <button onclick="logout()" class="btn-secondary">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Results Container -->
+    <div class="results-container">
+        <div class="container">
+            <!-- Header -->
+            <div class="results-header">
+                <h1 class="dashboard-title" id="transitionTitle">Your Career Transition Analysis</h1>
+                <p class="dashboard-subtitle">Comprehensive skill gap analysis and personalized learning roadmap</p>
+            </div>
+
+            <!-- Analysis Overview -->
+            <div class="analysis-card" id="analysisCard">
+                <div class="analysis-score" id="readinessScore">--</div>
+                <div class="analysis-difficulty" id="difficulty">Loading...</div>
+                <div class="analysis-insight" id="keyInsight">Analyzing your career transition...</div>
+            </div>
+
+            <!-- Target Role Requirements -->
+            <div class="results-section" id="targetRoleSection">
+                <h2 class="results-section-title">🎯 Target Role Requirements</h2>
+                <div id="targetRoleContent"></div>
+            </div>
+
+            <!-- Skill Comparison -->
+            <div class="results-section" id="skillComparisonSection">
+                <h2 class="results-section-title">📊 Skill Gap Analysis</h2>
+                <div id="skillComparisonContent"></div>
+            </div>
+
+            <!-- Gap Summary -->
+            <div class="results-section" id="gapSummarySection">
+                <h2 class="results-section-title">📋 Gap Summary</h2>
+                <div id="gapSummaryContent"></div>
+            </div>
+
+            <!-- Learning Path -->
+            <div class="results-section" id="learningPathSection">
+                <h2 class="results-section-title">🗺️ Your Learning Path</h2>
+                <div id="learningPathContent"></div>
+            </div>
+
+            <!-- Weekly Schedule -->
+            <div class="results-section" id="weeklyScheduleSection">
+                <h2 class="results-section-title">📅 Weekly Schedule</h2>
+                <div id="weeklyScheduleContent"></div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="results-section" id="certificationsSection">
+                <h2 class="results-section-title">🎓 Recommended Certifications</h2>
+                <div id="certificationsContent"></div>
+            </div>
+
+            <!-- Portfolio Projects -->
+            <div class="results-section" id="portfolioSection">
+                <h2 class="results-section-title">💼 Portfolio Projects</h2>
+                <div id="portfolioContent"></div>
+            </div>
+
+            <!-- Job Search Prep -->
+            <div class="results-section" id="jobSearchSection">
+                <h2 class="results-section-title">🔍 Job Search Preparation</h2>
+                <div id="jobSearchContent"></div>
+            </div>
+
+            <!-- Milestone Timeline -->
+            <div class="results-section" id="milestoneSection">
+                <h2 class="results-section-title">⏱️ Milestone Timeline</h2>
+                <div id="milestoneContent"></div>
+            </div>
+
+            <!-- Tips -->
+            <div class="results-section" id="tipsSection">
+                <h2 class="results-section-title">💡 Tips for Success</h2>
+                <div id="tipsContent"></div>
+            </div>
+
+            <!-- Investment Estimate -->
+            <div class="results-section" id="investmentSection">
+                <h2 class="results-section-title">💰 Estimated Investment</h2>
+                <div id="investmentContent"></div>
+            </div>
+
+            <!-- CTA -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="dashboard.html" class="btn-primary btn-large">
+                    Analyze Another Career Path
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="results.js"></script>
+</body>
+
+</html>

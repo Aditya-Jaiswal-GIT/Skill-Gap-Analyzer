@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Skill Gap Analyzer</title>
+    <meta name="description" content="Analyze your skill gaps and get your personalized career transition roadmap.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🎯</span>
+                    <span class="logo-text">Skill Gap Analyzer</span>
+                </a>
+                <div class="nav-links">
+                    <span id="userEmail" class="nav-link"></span>
+                    <button onclick="logout()" class="btn-secondary">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <div class="dashboard-header">
+            <div class="container">
+                <h1 class="dashboard-title">Analyze Your Skill Gap</h1>
+                <p class="dashboard-subtitle">Tell us about your career goals and we'll create your personalized
+                    learning roadmap</p>
+            </div>
+        </div>
+
+        <div class="container dashboard-content">
+            <!-- Messages -->
+            <div id="successMessage" class="message success"></div>
+            <div id="errorMessage" class="message error"></div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="loading">
+                <div class="spinner"></div>
+                <p>Analyzing your skill gap... This may take a minute.</p>
+            </div>
+
+            <!-- Analysis Form -->
+            <form id="analysisForm">
+                <!-- Career Profile -->
+                <div class="form-card">
+                    <h2 class="form-section-title">💼 Career Profile</h2>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="currentRole" class="form-label">Current Role *</label>
+                            <input type="text" id="currentRole" name="currentRole" class="form-input"
+                                placeholder="e.g., Junior Web Developer" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="targetRole" class="form-label">Target Role *</label>
+                            <input type="text" id="targetRole" name="targetRole" class="form-input"
+                                placeholder="e.g., Senior Full Stack Engineer" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="industry" class="form-label">Industry *</label>
+                            <select id="industry" name="industry" class="form-select" required>
+                                <option value="">Select industry</option>
+                                <option value="Technology">Technology</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Healthcare">Healthcare</option>
+                                <option value="Education">Education</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Design">Design</option>
+                                <option value="Sales">Sales</option>
+                                <option value="Operations">Operations</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="yearsExperience" class="form-label">Years of Experience *</label>
+                            <input type="number" id="yearsExperience" name="yearsExperience" class="form-input"
+                                placeholder="0" min="0" max="50" value="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="educationLevel" class="form-label">Education Level *</label>
+                        <select id="educationLevel" name="educationLevel" class="form-select" required>
+                            <option value="high_school">High School</option>
+                            <option value="associate">Associate Degree</option>
+                            <option value="bachelors" selected>Bachelor's Degree</option>
+                            <option value="masters">Master's Degree</option>
+                            <option value="phd">PhD</option>
+                            <option value="bootcamp">Bootcamp Graduate</option>
+                            <option value="self_taught">Self-Taught</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Current Skills -->
+                <div class="form-card">
+                    <h2 class="form-section-title">🎯 Current Skills</h2>
+
+                    <div class="form-group">
+                        <label class="form-label">Add Your Skills</label>
+                        <div class="add-skill-row">
+                            <input type="text" id="skillName" class="form-input"
+                                placeholder="Skill name (e.g., JavaScript)">
+                            <select id="skillLevel" class="form-select">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate" selected>Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                            <button type="button" onclick="addSkill()" class="btn-secondary">Add</button>
+                        </div>
+                    </div>
+
+                    <div id="skillsContainer" class="skills-container"></div>
+                </div>
+
+                <!-- Learning Preferences -->
+                <div class="form-card">
+                    <h2 class="form-section-title">📚 Learning Preferences</h2>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="weeklyLearningHours" class="form-label">Weekly Learning Hours *</label>
+                            <input type="number" id="weeklyLearningHours" name="weeklyLearningHours" class="form-input"
+                                placeholder="10" min="1" max="168" value="10" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="timelineMonths" class="form-label">Target Timeline (Months) *</label>
+                            <input type="number" id="timelineMonths" name="timelineMonths" class="form-input"
+                                placeholder="12" min="1" max="60" value="12" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="preferredLearningStyle" class="form-label">Preferred Learning Style *</label>
+                            <select id="preferredLearningStyle" name="preferredLearningStyle" class="form-select"
+                                required>
+                                <option value="video">Video Courses (YouTube, Udemy, Coursera)</option>
+                                <option value="reading">Books & Documentation</option>
+                                <option value="hands_on">Hands-on Projects & Labs</option>
+                                <option value="mixed" selected>Mixed (Videos + Reading + Projects)</option>
+                                <option value="mentorship">Mentorship & Bootcamps</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="budget" class="form-label">Learning Budget *</label>
+                            <select id="budget" name="budget" class="form-select" required>
+                                <option value="free">Free Resources Only</option>
+                                <option value="low">Low (Under $50/month)</option>
+                                <option value="medium" selected>Medium (Under $200/month)</option>
+                                <option value="high">High (Unlimited)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-primary btn-large btn-full">
+                    Analyze My Skills
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="firebase-config.js"></script>
+    <script src="auth.js"></script>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

@@ -86,19 +86,30 @@ document.getElementById('analysisForm').addEventListener('submit', async functio
 
     try {
         // Send data to webhook
+        console.log('Sending request to webhook...', formData);
+        console.log('Webhook URL:', 'https://aditya212005.app.n8n.cloud/webhook/skill-gap-analyzer');
+        
         const response = await fetch('https://aditya212005.app.n8n.cloud/webhook/skill-gap-analyzer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify(formData)
         });
 
+        console.log('Response received!');
+        console.log('Response status:', response.status);
+        console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            const errorText = await response.text();
+            console.error('Error response:', errorText);
+            throw new Error(`Server error: ${response.status} - ${errorText}`);
         }
 
         const result = await response.json();
+        console.log('Received result:', result);
 
         // Get current user
         const user = getCurrentUser();
@@ -120,10 +131,25 @@ document.getElementById('analysisForm').addEventListener('submit', async functio
         window.location.href = 'results.html';
 
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error details:', error);
+        console.error('Error stack:', error.stack);
+        
         loadingState.classList.remove('active');
         form.style.display = 'block';
-        errorMessage.textContent = 'Failed to analyze your skills. Please try again.';
+        
+        let errorMsg = 'Failed to analyze your skills. ';
+        
+        if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+            errorMsg += 'Network error - please check your internet connection or try again later.';
+        } else if (error.message.includes('CORS')) {
+            errorMsg += 'Connection blocked by security policy. Please contact support.';
+        } else if (error.message.includes('Server error')) {
+            errorMsg += error.message;
+        } else {
+            errorMsg += 'Please try again.';
+        }
+        
+        errorMessage.textContent = errorMsg;
         errorMessage.classList.add('active');
     }
 });
